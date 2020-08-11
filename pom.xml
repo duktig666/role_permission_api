@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.test</groupId>
-    <artifactId>env_project_test</artifactId>
+    <artifactId>role_permission_api</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
     <modules>
-        <module>env_common</module>
-        <module>env_system</module>
+        <module>role_common</module>
+        <module>role_system</module>
     </modules>
 
     <parent>
