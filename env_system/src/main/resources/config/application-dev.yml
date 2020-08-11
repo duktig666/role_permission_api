@@ -1,0 +1,173 @@
+server:
+  port: 9002
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
+    username: root
+    password: 159357asd
+    hikari:
+      max-lifetime: 60000 # 一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒，参考MySQL wait_timeout参数（show variables like '%timeout%';）
+      maximum-pool-size: 30 # 连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count)
+      minimum-idle: 10
+      idle-timeout: 30000    #连接允许在池中闲置的最长时间，默认为600000，即10分钟。
+
+  data:
+    redis:
+      repositories:
+        enabled: false
+
+  redis:
+    #数据库索引
+    database: 0
+    host: 118.89.143.27
+    port: 6379
+    password:
+    #连接超时时间
+    timeout: 10000
+    jedis:
+      pool:
+        # 连接池最大连接数（使用负值表示没有限制）
+        max-active: -1
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
+
+  http:
+    encoding:
+      charset: utf-8
+      force: true
+      enabled: true
+
+  servlet:
+    multipart:
+      # 开启 multipart 上传功能
+      enabled: true
+      # 文件写入磁盘的阈值
+      file-size-threshold: 2KB
+      # 最大文件大小
+      max-file-size: 200MB
+      # 最大请求大小
+      max-request-size: 215MB
+
+  devtools:
+    restart:
+      enabled: true #热部署默认会重启
+      additional-exclude: static/**,public/** #排除那个目录的文件不需要restart
+      additional-paths: src/main/java #添加那个目录的文件需要restart
+
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: deleted  #全局逻辑删除字段值 3.3.0开始支持
+      logic-delete-value: 1       # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0   # 逻辑未删除值(默认为 0)
+  configuration:
+    map-underscore-to-camel-case: true  # 开启驼峰命名规则的转换
+    call-setters-on-nulls: true # 如果查询结果中包含空值的列，则 mybatis 在映射的时候，不会映射这个字段
+
+info:
+  app:
+    name: env_test
+    description: 角色权限管理后端环境项目
+    version: @project.version@
+    encoding: @project.build.sourceEncoding@
+    java:
+      version: @java.version@
+
+# springboot actuator监控
+management:
+  server:
+    port: 10001  # 监控端口
+  endpoints:
+    web:
+      exposure:
+        include: info,health,monitoring
+  endpoint:
+    health:
+      show-details: always
+
+javamelody:
+  # 开启额外端口
+  management-endpoint-monitoring-enabled: true
+  # 启用JavaMelody自动配置（可选，默认：true）
+  enabled: true
+  # 从监视中排除的数据源名称（可选，逗号分隔）
+  excluded-datasources: secretSource,topSecretSource
+  # 启用对Spring服务和控制器的监视（可选，默认值：true）
+  #spring-monitoring-enabled: true
+  # 初始化参数JavaMelody（可选）
+  # See: https://github.com/javamelody/javamelody/wiki/UserGuide#6-optional-parameters
+  init-parameters:
+    # 日志http请求
+    log: true
+    # 从监视中排除图像，css，字体和js url
+    #url-exclude-pattern: (/webjars/.*|/css/.*|/images/.*|/fonts/.*|/js/.*)
+    # 以总位数的http请求
+    #http-transform-pattern: \d+
+    # 补充基本身份验证
+    authorized-users: admin:admin
+    # 更改默认存储目录
+    #storage-directory: /tmp/javamelody
+    # 更改默认的“ / monitoring”路径
+    #monitoring-path: /admin/performance
+
+# JWT(自定义)
+jwt:
+  header: Authorization
+  # 令牌前缀
+  token-start-with: Bearer
+  # 必须使用最少88位的Base64对该令牌进行编码
+  base64-secret: ZmQ0ZGI5NjQ0MDQwY2I4MjMxY2Y3ZmI3MjdhN2ZmMjNhODViOTg1ZGE0NTBjMGM4NDA5NzYxMjdjOWMwYWRmZTBlZjlhNGY3ZTg4Y2U3YTE1ODVkZDU5Y2Y3OGYwZWE1NzUzNWQ2YjFjZDc0NGMxZWU2MmQ3MjY1NzJmNTE0MzI=
+  # 令牌过期时间 此处单位/毫秒 ，默认4小时，可在此网站生成 https://www.convertworld.com/zh-hans/time/milliseconds.html
+  token-validity-in-seconds: 14400000
+  # 在线用户key
+  online-key: online-token
+  # 验证码
+  code-key: code-key
+
+
+#是否开启 swagger-ui
+swagger:
+  enabled: true
+  host: 127.0.0.1:${server.port}
+#  defaultToken: eyJhbGciOiJIUzI1NiJ9.eyJQT1dFUiI6W10sInR5cGUiOjAsImV4cCI6MTU5NDk3NjE0OSwiaWF0IjoxNTk0OTc2MDYzLCJ1c2VybmFtZSI6IjkifQ.rE9MgnwSj5Rba0mQf57nunPc3LLHQshvcqdVr_bMNr8
+
+# 文件存储路径
+file:
+  path: ./upload/
+  # 文件大小 /M
+  maxSize: 100
+  avatarMaxSize: 5
+
+#邮箱验证码
+code:
+ expiration: 5 #邮箱验证码有效时间/分钟
+
+# 图形验证码
+loginCode:
+ expiration: 2  #登录图形验证码有效时间/分钟
+ open: false
+
+#密码加密传输，前端公钥加密，后端私钥解密
+rsa:
+ private_key: MIIBUwIBADANBgkqhkiG9w0BAQEFAASCAT0wggE5AgEAAkEA0vfvyTdGJkdbHkB8mp0f3FE0GYP3AYPaJF7jUd1M0XxFSE2ceK3k2kw20YvQ09NJKk+OMjWQl9WitG9pB6tSCQIDAQABAkA2SimBrWC2/wvauBuYqjCFwLvYiRYqZKThUS3MZlebXJiLB+Ue/gUifAAKIg1avttUZsHBHrop4qfJCwAI0+YRAiEA+W3NK/RaXtnRqmoUUkb59zsZUBLpvZgQPfj1MhyHDz0CIQDYhsAhPJ3mgS64NbUZmGWuuNKp5coY2GIj/zYDMJp6vQIgUueLFXv/eZ1ekgz2Oi67MNCk5jeTF2BurZqNLR3MSmUCIFT3Q6uHMtsB9Eha4u7hS31tj1UWE+D+ADzp59MGnoftAiBeHT7gDMuqeJHPL4b+kC+gzV4FGTfhR9q3tTbklZkD2A==
+ public_key: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBANL378k3RiZHWx5AfJqdH9xRNBmD9wGD2iRe41HdTNF8RUhNnHit5NpMNtGL0NPTSSpPjjI1kJfVorRvaQerUgkCAwEAAQ
+
+single:
+  login: false # 是否开启单一登录模式（token只能用一次，重新登录清除之前的token）
+
+# 小程序配置
+applet:
+  appId: wx407f84a1fee1dd2e
+  appSecret: ef7c3eeae1dbf26afe12a45585192f66
+
+
+
+
+

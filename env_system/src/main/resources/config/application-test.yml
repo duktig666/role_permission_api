@@ -1,0 +1,83 @@
+server:
+  port: 8091
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss  #@JsonFormat 默认时间格式化
+    time-zone: Asia/Shanghai
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mysql://59.110.218.15:3307/xiaoyun_notice?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
+    username: root
+    password: Marchsoft@2020
+    hikari:
+      max-lifetime: 60000 # 一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒，参考MySQL wait_timeout参数（show variables like '%timeout%';）
+      maximum-pool-size: 30 # 连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count)
+      minimum-idle: 5  # 最小空闲链接
+      idle-timeout: 180000    #连接允许在池中闲置的最长时间，默认为600000，即10分钟。
+
+
+  http:
+    encoding:
+      charset: utf-8
+      force: true
+      enabled: true
+
+  servlet:
+    multipart:
+      # 开启 multipart 上传功能
+      enabled: true
+      # 文件写入磁盘的阈值
+      file-size-threshold: 2KB
+      # 最大文件大小
+      max-file-size: 200MB
+      # 最大请求大小
+      max-request-size: 215MB
+
+  devtools:
+    restart:
+      enabled: false #热部署默认会重启
+      additional-exclude: static/**,public/** #排除那个目录的文件不需要restart
+      additional-paths: src/main/java #添加那个目录的文件需要restart
+
+
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: status  #全局逻辑删除字段值 3.3.0开始支持
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+# JWT(自定义)
+jwt:
+  header: Authorization
+  secret: mySecret
+  #token有效期一天
+  expiration: 86400000
+  # 令牌前缀
+  tokenHead: "Bearer "
+  subject: "con"
+
+#是否开启 swagger-ui
+swagger:
+  enabled: true
+  host: signup.lzyjykj.com/v3
+
+# 文件存储路径
+file:
+  path: ./upload/
+  # 文件大小 /M
+  maxSize: 100
+  avatarMaxSize: 5
+app:
+  appid: wx23eb370840c81eaa
+  secret: 8a665bce9dcc74e6e30e1c849763ab0a
+  grant_type: authorization_code
+aliyun:
+  host: https://fesms.market.alicloudapi.com
+  path: /sms/
+  skin: 1
+  sign: 1
+  appcode: 9b593061790c4969ba4e631a8e9dca6a
