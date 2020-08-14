@@ -33,7 +33,7 @@ import java.util.Set;
  *
  * @author RenShiWei
  * Date: 2020/8/3 14:56
- *
+ * <p>
  * '@EnableGlobalMethodSecurity' 保证post之前的注解可以使用
  * '@EnableWebSecurity' 这个注解必须加，开启Security
  **/
@@ -57,11 +57,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final ApplicationContext applicationContext;
 
-    public SecurityConfig( TokenProvider tokenProvider,
-                           CorsFilter corsFilter,
-                           JwtAuthenticationEntryPoint authenticationErrorHandler,
-                           JwtAccessDeniedHandler jwtAccessDeniedHandler,
-                           ApplicationContext applicationContext) {
+    public SecurityConfig ( TokenProvider tokenProvider,
+                            CorsFilter corsFilter,
+                            JwtAuthenticationEntryPoint authenticationErrorHandler,
+                            JwtAccessDeniedHandler jwtAccessDeniedHandler,
+                            ApplicationContext applicationContext ) {
         this.tokenProvider = tokenProvider;
         this.corsFilter = corsFilter;
         this.authenticationErrorHandler = authenticationErrorHandler;
@@ -76,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * Date: 2020/8/7 16:34
      */
     @Bean
-    GrantedAuthorityDefaults grantedAuthorityDefaults() {
+    GrantedAuthorityDefaults grantedAuthorityDefaults () {
         return new GrantedAuthorityDefaults("");
     }
 
@@ -87,7 +87,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * Date: 2020/8/7 16:34
      */
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder () {
         // 密码加密方式
         return new BCryptPasswordEncoder();
     }
@@ -99,9 +99,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * Date: 2020/8/7 16:35
      */
     @Override
-    protected void configure( HttpSecurity httpSecurity) throws Exception {
+    protected void configure ( HttpSecurity httpSecurity ) throws Exception {
         // 搜寻匿名标记 url： @AnonymousAccess，放行允许匿名访问的接口
-        Map<RequestMappingInfo, HandlerMethod> handlerMethodMap = applicationContext.getBean(RequestMappingHandlerMapping.class).getHandlerMethods();
+        Map<RequestMappingInfo, HandlerMethod> handlerMethodMap =
+                applicationContext.getBean(RequestMappingHandlerMapping.class).getHandlerMethods();
         Set<String> anonymousUrls = new HashSet<>();
         for (Map.Entry<RequestMappingInfo, HandlerMethod> infoEntry : handlerMethodMap.entrySet()) {
             HandlerMethod handlerMethod = infoEntry.getValue();
@@ -181,7 +182,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * @author RenShiWei
      * Date: 2020/8/7 16:42
      */
-    private TokenConfigurer securityConfigurerAdapter() {
+    private TokenConfigurer securityConfigurerAdapter () {
         return new TokenConfigurer(tokenProvider);
     }
 }

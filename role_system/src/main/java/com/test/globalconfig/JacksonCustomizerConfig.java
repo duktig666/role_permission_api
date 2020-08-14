@@ -1,4 +1,4 @@
-package com.test.config;
+package com.test.globalconfig;
 
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
@@ -12,8 +12,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * jackson全局配置java8 LocalDateTime的序列化
- * 全局配置时间返回格式
+ * jackson全局配置java8 LocalDateTime的序列化 全局配置时间返回格式
  *
  * @author RenShiWei
  * Date: 2020/7/9 18:14
@@ -27,23 +26,24 @@ public class JacksonCustomizerConfig {
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer () {
         return builder -> {
-            //全局配置java8 LocalDateTime的序列化
-            builder.serializerByType(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(localDateTimePattern)));
-            builder.deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(localDateTimePattern)));
+            // 全局配置java8 LocalDateTime的序列化
+            builder.serializerByType(
+                    LocalDateTime.class,
+                    new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(localDateTimePattern)));
+            builder.deserializerByType(
+                    LocalDateTime.class,
+                    new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(localDateTimePattern)));
         };
     }
 
-    /**
-     * LocalDateTime转换器，用于转换RequestParam和PathVariable参数
-     */
+    /** LocalDateTime转换器，用于转换RequestParam和PathVariable参数 */
     @Bean
-    public Converter<String, LocalDateTime> localDateTimeConverter() {
+    public Converter<String, LocalDateTime> localDateTimeConverter () {
         return new Converter<String, LocalDateTime>() {
             @Override
-            public LocalDateTime convert(String source) {
+            public LocalDateTime convert ( String source ) {
                 return LocalDateTime.parse(source, DateTimeFormatter.ofPattern(localDateTimePattern));
             }
         };
     }
-
 }
