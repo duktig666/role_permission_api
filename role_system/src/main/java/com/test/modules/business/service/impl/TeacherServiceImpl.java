@@ -1,9 +1,7 @@
 package com.test.modules.business.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.test.modules.business.entity.Teacher;
-import com.test.modules.business.mapper.TeacherMapper;
-import com.test.modules.business.service.ITeacherService;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +14,11 @@ import org.springframework.stereotype.Service;
 @Service
 @Primary
 public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher>
-    implements ITeacherService {
+        implements IService<Teacher> {
 
-  private final TeacherMapper teacherMapper;
+    private final TeacherMapper teacherMapper;
 
-  public TeacherServiceImpl(TeacherMapper teacherMapper) {
-    this.teacherMapper = teacherMapper;
-  }
+    public TeacherServiceImpl ( TeacherMapper teacherMapper ) {
+        this.teacherMapper = teacherMapper;
+    }
 }
