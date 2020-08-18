@@ -93,7 +93,7 @@ management:
       show-details: always
 
 javamelody:
-  # 开启额外端口
+  # 开启额外端口（配合actuator监控）
   management-endpoint-monitoring-enabled: true
   # 启用JavaMelody自动配置（可选，默认：true）
   enabled: true
