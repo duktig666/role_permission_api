@@ -40,7 +40,6 @@
         <UserAgentUtils.version>1.20</UserAgentUtils.version>
         <ip2region.version>1.7.2</ip2region.version>
         <captcha.version>1.6.2</captcha.version>
-        <javamelody.version>1.85.0</javamelody.version>
     </properties>
 
     <!-- 锁定jar包版本 -->
@@ -126,13 +125,6 @@
                 <groupId>org.bgee.log4jdbc-log4j2</groupId>
                 <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
                 <version>${log4jdbc.version}</version>
-            </dependency>
-
-            <!-- javamelody监控检测技术 -->
-            <dependency>
-                <groupId>net.bull.javamelody</groupId>
-                <artifactId>javamelody-spring-boot-starter</artifactId>
-                <version>${javamelody.version}</version>
             </dependency>
 
             <!--    mybatis plus相关    -->
